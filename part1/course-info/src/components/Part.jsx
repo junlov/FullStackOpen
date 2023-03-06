@@ -1,10 +1,10 @@
 import React from "react";
 
-export default function Part({ prop1, prop2 }) {
+export default function Part({ name, exercises }) {
   return (
     <div>
       <p>
-        {prop1} {prop2}
+        {name} {exercises}
       </p>
     </div>
   );

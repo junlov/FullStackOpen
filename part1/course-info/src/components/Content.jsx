@@ -1,12 +1,12 @@
 import React from "react";
 import Part from "./Part";
 
-export default function Content({ props }) {
+export default function Content({ course }) {
   return (
     <div>
-      <Part prop1={props.part1} prop2={props.exercises1} />
-      <Part prop1={props.part2} prop2={props.exercises2} />
-      <Part prop1={props.part3} prop2={props.exercises3} />
+      <Part name={course.parts[0].name} exercises={course.parts[0].exercises} />
+      <Part name={course.parts[1].name} exercises={course.parts[1].exercises} />
+      <Part name={course.parts[2].name} exercises={course.parts[2].exercises} />
     </div>
   );
 }
