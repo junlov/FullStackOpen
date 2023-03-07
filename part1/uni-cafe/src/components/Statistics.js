@@ -17,7 +17,7 @@ export default function Statistics({ props }) {
       <Button handleClick={handleNeutral} text="Neutral" />
       <Button handleClick={handleBad} text="Bad" />
 
-      <h1>statistics</h1>
+      <h1>Statistics</h1>
       {good === 0 && bad === 0 && neutral === 0 ? (
         <p>No feedback given</p>
       ) : (
