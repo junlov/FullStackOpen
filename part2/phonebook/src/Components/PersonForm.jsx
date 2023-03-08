@@ -9,8 +9,6 @@ export default function PersonForm(props) {
     newName,
   } = props;
 
-  console.log("PersonFormProps", props);
-
   return (
     <div>
       <form onSubmit={handleSubmit}>
