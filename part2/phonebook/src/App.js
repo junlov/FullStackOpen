@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Filter from "./Components/Filter";
 import PersonForm from "./Components/PersonForm";
 import Persons from "./Components/Persons";
-import axios from "axios";
+import phoneBookService from "./Services/phonebook";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,28 +11,41 @@ const App = () => {
   const [filter, setFilter] = useState(false);
   const [filterName, setFilterName] = useState("");
 
-  const personsFetch = () => {
-    axios
-      .get("http://localhost:3001/persons")
-      .then((response) => setPersons(response.data));
-  };
-
-  useEffect(personsFetch, []);
+  useEffect(() => {
+    phoneBookService.getAll().then((response) => setPersons(response));
+  }, []);
 
   const addPerson = (event) => {
     const person = persons.filter((person) => person.name === newName);
 
     if (person.length !== 0) {
-      alert(`${newName} is already added to phonebook`);
+      console.log("addPerson", person[0].id);
+      const contactQuery = window.confirm(
+        "Do you want to update this contact number?"
+      );
+
+      if (contactQuery === true) {
+        phoneBookService.updateNum(person[0].id, newNumber).then(() => {
+          setPersons(
+            persons.map((person) =>
+              person.name === newName
+                ? { ...person, number: newNumber }
+                : { ...person }
+            )
+          );
+        });
+      }
     } else {
       const personObject = {
         name: newName,
         number: newNumber,
       };
 
-      setPersons(persons.concat(personObject));
-      setNewName("");
-      setNewNumber("");
+      phoneBookService.create(personObject).then((newPerson) => {
+        setPersons(persons.concat(newPerson));
+        setNewName("");
+        setNewNumber("");
+      });
     }
   };
 
@@ -41,14 +54,17 @@ const App = () => {
     addPerson(e);
   };
 
+  // This function sets the state of newName to the value of the input field of the person form
   const handleNameInput = (e) => {
     setNewName(e.target.value);
   };
 
+  // This function sets the state of the newNumber to the value of the input field of the person form
   const handleNumberInput = (e) => {
     setNewNumber(e.target.value);
   };
 
+  // This function filters any keys that are written within the Filter component and sets Filter to either true or false based on value of the input field
   const handleFilter = (e) => {
     const keyword = e.target.value;
 
@@ -62,6 +78,20 @@ const App = () => {
     } else {
       setFilter(false);
       setFilterName("");
+    }
+  };
+
+  const handleDelete = (id) => {
+    const deleteQuery = window.confirm(
+      `Are you sure you want to delete ${id}?`
+    );
+
+    if (deleteQuery === true) {
+      phoneBookService.delete_(id).then(() => {
+        setPersons(persons.filter((person) => person.id !== id));
+      });
+    } else {
+      return null;
     }
   };
 
@@ -87,6 +117,7 @@ const App = () => {
           filter={filter}
           filterName={filterName}
           personsToShow={personsToShow}
+          handleDelete={handleDelete}
         />
       </div>
     </div>

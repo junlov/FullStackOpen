@@ -2,18 +2,20 @@ import React from "react";
 import Person from "./Person";
 
 export default function Persons(props) {
-  const { personsToShow } = props;
-
   return (
     <div>
       <ul>
-        {personsToShow.map((person) => {
+        {props.personsToShow.map((person) => {
           return (
-            <Person
-              key={person.name}
-              name={person.name}
-              number={person.number}
-            />
+            <>
+              <Person
+                key={person.id}
+                name={person.name}
+                number={person.number}
+                handleDelete={props.handleDelete}
+                id={person.id}
+              />
+            </>
           );
         })}
       </ul>
