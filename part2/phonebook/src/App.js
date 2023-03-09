@@ -3,6 +3,7 @@ import Filter from "./Components/Filter";
 import PersonForm from "./Components/PersonForm";
 import Persons from "./Components/Persons";
 import phoneBookService from "./Services/phonebook";
+import Notification from "./Components/Notification";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -10,6 +11,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [filter, setFilter] = useState(false);
   const [filterName, setFilterName] = useState("");
+  const [successNotification, setSuccessNotification] = useState(null);
+  const [errorNotification, setErrorNotification] = useState(null);
 
   useEffect(() => {
     phoneBookService.getAll().then((response) => setPersons(response));
@@ -41,11 +44,17 @@ const App = () => {
         number: newNumber,
       };
 
-      phoneBookService.create(personObject).then((newPerson) => {
-        setPersons(persons.concat(newPerson));
-        setNewName("");
-        setNewNumber("");
-      });
+      phoneBookService
+        .create(personObject)
+        .then((newPerson) => {
+          setPersons(persons.concat(newPerson));
+          setNewName("");
+          setNewNumber("");
+          setSuccessNotification(newPerson.name);
+        })
+        .then(() => {
+          setTimeout(() => setSuccessNotification(null), 5000);
+        });
     }
   };
 
@@ -87,9 +96,8 @@ const App = () => {
     );
 
     if (deleteQuery === true) {
-      phoneBookService.delete_(id).then(() => {
-        setPersons(persons.filter((person) => person.id !== id));
-      });
+      const pushDel = (id) => phoneBookService.delete_(id);
+      pushDel(id);
     } else {
       return null;
     }
@@ -100,6 +108,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification success={successNotification} error={errorNotification} />
       <Filter handleFilter={handleFilter} />
 
       <h3>Add New Person</h3>

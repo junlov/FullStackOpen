@@ -17,7 +17,13 @@ const delete_ = (object) => {
   const delUrl = `${baseUrl}/${object}`;
   const request = axios.delete(delUrl);
 
-  return request;
+  console.log("request in phonebook", request);
+
+  request
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => console.log("error from phoenbook", err));
 };
 
 const updateNum = (id, newNumber) => {
