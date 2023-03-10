@@ -1,0 +1,21 @@
+### * Get a single note
+
+GET http://localhost:3001/api/notes/5
+
+### * Get all notes
+
+GET http://localhost:3001/api/notes/
+
+### * Delete a note
+
+DELETE http://localhost:3001/api/notes/4
+
+### * Create a new note
+
+POST http://localhost:3001/api/notes/
+Content-Type: application/json
+
+{
+    "content": "Postman is good in the backend",
+    "important": true,
+}
