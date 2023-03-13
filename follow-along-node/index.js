@@ -83,8 +83,8 @@ app.post("/api/notes", (request, response) => {
   response.json(note);
 });
 
-const uknownEndpoint = (request, response) => {
-  response.status(404).send({ error: "uknown endpoint" });
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: "unknown endpoint" });
 };
 
 app.use(unknownEndpoint);
