@@ -1,7 +1,25 @@
 const express = require("express");
+const morgan = require("morgan");
+
 const app = express();
 
 app.use(express.json());
+
+app.use(morgan("tiny"));
+
+morgan.token("postLog", (req, res) => {
+  return req;
+});
+
+const postLog = (req, res, next) => {
+  console.log("Method:", req.method);
+  console.log("Path:", req.path);
+  console.log("Body:", req.body);
+  console.log("----");
+  next();
+};
+
+app.use(postLog);
 
 const persons = [
   {
