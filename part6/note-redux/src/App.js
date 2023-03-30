@@ -1,15 +1,12 @@
 import NewNote from "./components/NewNote";
-import { useSelector, useDispatch } from "react-redux";
+import VisibilityFilter from "./components/VisibilityFilter";
 import Notes from "./components/Notes";
 
 const App = () => {
-  const importantNotes = useSelector((state) =>
-    state.filter((note) => note.important)
-  );
-
   return (
     <div>
       <NewNote />
+      <VisibilityFilter />
       <Notes />
     </div>
   );
