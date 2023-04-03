@@ -12,7 +12,7 @@
     },
     {
       "content": "redux along with redux toolkit allows for simplifying the code",
-      "important": false,
+      "important": true,
       "id": 3
     },
     {
@@ -22,8 +22,28 @@
     },
     {
       "content": "in order to get the data from the backend into state, leveraging a useEffect hook is the perfect solution",
-      "important": false,
+      "important": true,
       "id": 5
+    },
+    {
+      "content": "leveraging react query also helps instead of having to use redux",
+      "important": false,
+      "id": 6
+    },
+    {
+      "content": "Hey there",
+      "important": true,
+      "id": 7
+    },
+    {
+      "content": "yes",
+      "important": true,
+      "id": 8
+    },
+    {
+      "content": "Terrific",
+      "important": true,
+      "id": 9
     }
   ]
 }
